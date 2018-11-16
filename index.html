@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Our Enterprise Software</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="obsidian.css"/>
+    </head>
+    <body>
+        <input type="text" onkeyup="document.getElementsByTagName('ul')[0].innerHTML='';generateStructure(this.value.split(','))" placeholder="keyword1,keyword2"/>
+        <ul></ul>
+        <script>
+            function generateStructure(keywords)
+            {
+                'use strict';
+                const starter = [
+                    'app',
+                    'src',
+                    'main',
+                    'classes',
+                    'code',
+                ];
+                const buzzwords = [
+                    'Object',
+                    'Factory',
+                    'Builder',
+                    'Model',
+                    'Entity',
+                    'Repository',
+                    'Helper',
+                    'Adapter',
+                    'Dto',
+                    'Item',
+                    'Manager',
+                    'Service',
+                    'Provider',
+                    'Middleware',
+                    'Plugin',
+                    'Controller',
+                    'Singleton',
+                ];
+                let usedNames = [];
+                for (const keyword of keywords) {
+                    for (const keyword2 of keywords) {
+                        for (let i = 1 + Math.ceil(Math.random()*Math.sqrt(buzzwords.length)); i > 0; i--) {
+                            let parts = [];
+                            for (let j = 1 + Math.round(Math.random()*3); j > 0; j--) {
+                                parts.push(buzzwords[Math.floor(Math.random()*buzzwords.length)]);
+                            }
+                            switch (Math.round(Math.random()*2)) {
+                                case 2:
+                                    parts.push(keyword2);
+                                    break;
+                                case 1:
+                                    parts.push(keyword);
+                                    break;
+                                case 0:
+                                default:
+                            }
+                            randomizeUnique(parts);
+                            let namespace = 'Vendor\\' + keyword + '\\' + parts.join('\\');
+                            const path = starter[Math.floor(starter.length*Math.random())] + '/' + namespace.replace(/\\/g, '/') + '/';
+                            parts.push(keyword);
+                            randomizeUnique(parts);
+                            let name = parts.join('');
+                            if (usedNames.indexOf(namespace+'\\'+name)===-1) {
+                                usedNames.push(namespace+'\\'+name);
+                                buildClasses(path, namespace, name);
+                            }
+                        }
+                    }
+                }
+            }
+            function randomizeUnique(anArray) {
+                anArray.sort((item1, item2) => {
+                    return Math.round(Math.random()*2-1);
+                }).filter((item, index, self) => {
+                    return self.indexOf(item) === index;
+                });
+            }
+            function buildClassLike(path, name, namespace, content)
+            {
+                let classLike = document.createElement('li');
+                classLike.appendChild(document.createElement('strong'));
+                classLike.lastChild.appendChild(document.createTextNode(path+'/'+name+'.php'));
+                classLike.appendChild(document.createElement('pre'));
+                classLike.lastChild.appendChild(document.createElement('code'));
+                classLike.lastChild.lastChild.setAttribute('class', 'php');
+                classLike.lastChild.lastChild.innerText = content
+                    .replace(/###PATH###/g, path)
+                    .replace(/###CLASS###/g, name)
+                    .replace(/###NAMESPACE###/g, namespace);
+                document.getElementsByTagName('ul')[0].appendChild(classLike);
+                window.setTimeout(function () {hljs.highlightBlock(classLike.lastChild.lastChild);}, 1);
+            }
+            function buildClasses(path, namespace, name) {
+                //FINAL IMPLEMENTATION
+                buildClassLike(
+                    path,
+                    name,
+                    namespace,
+                    '<?php\n\nnamespace ###NAMESPACE###;\n\nfinal class Final###CLASS### extends ###CLASS###\n{\n}\n'
+                );
+                //FIRST IMPLEMENTATION
+                buildClassLike(
+                    path,
+                    name,
+                    namespace,
+                    '<?php\n\nnamespace ###NAMESPACE###;\n\nclass ###CLASS### extends Abstract###CLASS### implements ###CLASS###Interface\n{\n}\n'
+                );
+                //IMPLEMENTATION INTERFACE
+                buildClassLike(
+                    path,
+                    name,
+                    namespace,
+                    '<?php\n\nnamespace ###NAMESPACE###;\n\ninterface ###CLASS###Interface extends Abstract###CLASS###Interface\n{\n}\n'
+                );
+                //ABSTRACT IMPLEMENTATION
+                buildClassLike(
+                    path,
+                    name,
+                    namespace,
+                    '<?php\n\nnamespace ###NAMESPACE###;\n\nabstract Abstract###CLASS### implements Abstract###CLASS###Interface\n{\n}\n'
+                );
+                //ABSTRACT INTERFACE
+                buildClassLike(
+                    path,
+                    name,
+                    namespace,
+                    '<?php\n\nnamespace ###NAMESPACE###;\n\ninterface Abstract###CLASS###Interface\n{\n}\n'
+                );
+            }
+        </script>
+        <script src="highlight.pack.js"></script>
+    </body>
+</html>
