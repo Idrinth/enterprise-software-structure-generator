@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="obsidian.css"/>
     </head>
     <body>
-        <input type="text" onkeyup="document.getElementsByTagName('ul')[0].innerHTML='';generateStructure(this.value.split(','))" placeholder="keyword1,keyword2"/>
+        <input value="Example" type="text" onkeyup="document.getElementsByTagName('ul')[0].innerHTML='';generateStructure(this.value.split(','))" placeholder="keyword1,keyword2"/>
         <ul></ul>
         <script>
             function generateStructure(keywords)
@@ -132,5 +132,6 @@
             }
         </script>
         <script src="highlight.pack.js"></script>
+        <script>generateStructure(['Example'])</script>
     </body>
 </html>
