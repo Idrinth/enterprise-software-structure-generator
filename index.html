@@ -59,7 +59,7 @@
                             }
                             randomizeUnique(parts);
                             let namespace = 'Vendor\\' + keyword + '\\' + parts.join('\\');
-                            const path = starter[Math.floor(starter.length*Math.random())] + '/' + namespace.replace(/\\/g, '/') + '/';
+                            const path = starter[Math.floor(starter.length*Math.random())] + '/' + namespace.replace(/\\/g, '/');
                             parts.push(keyword);
                             randomizeUnique(parts);
                             let name = parts.join('');
