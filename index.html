@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="obsidian.css"/>
     </head>
     <body>
-        <input value="Example" type="text" onkeyup="document.getElementsByTagName('ul')[0].innerHTML='';generateStructure(this.value.split(','))" placeholder="keyword1,keyword2"/>
+        <input value="Example,Application" type="text" onkeyup="document.getElementsByTagName('ul')[0].innerHTML='';generateStructure(this.value.split(','))" placeholder="keyword1,keyword2"/>
         <ul></ul>
         <script>
             function generateStructure(keywords)
@@ -57,11 +57,11 @@
                                 case 0:
                                 default:
                             }
-                            randomizeUnique(parts);
+                            parts = randomizeUnique(parts);
                             let namespace = 'Vendor\\' + keyword + '\\' + parts.join('\\');
                             const path = starter[Math.floor(starter.length*Math.random())] + '/' + namespace.replace(/\\/g, '/');
                             parts.push(keyword);
-                            randomizeUnique(parts);
+                            parts = randomizeUnique(parts);
                             let name = parts.join('');
                             if (usedNames.indexOf(namespace+'\\'+name)===-1) {
                                 usedNames.push(namespace+'\\'+name);
@@ -72,7 +72,7 @@
                 }
             }
             function randomizeUnique(anArray) {
-                anArray.sort((item1, item2) => {
+                return anArray.sort((item1, item2) => {
                     return Math.round(Math.random()*2-1);
                 }).filter((item, index, self) => {
                     return self.indexOf(item) === index;
