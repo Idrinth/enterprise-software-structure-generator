@@ -38,6 +38,9 @@
                     'Plugin',
                     'Controller',
                     'Singleton',
+                    'Util',
+                    'Utils',
+                    'Utility',
                 ];
                 let usedNames = [];
                 for (const keyword of keywords) {
@@ -78,11 +81,11 @@
                     return self.indexOf(item) === index;
                 });
             }
-            function buildClassLike(path, name, namespace, content)
+            function buildClassLike(path, name, namespace, content, filename)
             {
                 let classLike = document.createElement('li');
                 classLike.appendChild(document.createElement('strong'));
-                classLike.lastChild.appendChild(document.createTextNode(path+'/'+name+'.php'));
+                classLike.lastChild.appendChild(document.createTextNode(path+'/'+filename+'.php'));
                 classLike.appendChild(document.createElement('pre'));
                 classLike.lastChild.appendChild(document.createElement('code'));
                 classLike.lastChild.lastChild.setAttribute('class', 'php');
@@ -99,39 +102,44 @@
                     path,
                     name,
                     namespace,
-                    '<?php\n\nnamespace ###NAMESPACE###;\n\nfinal class Final###CLASS### extends ###CLASS###\n{\n}\n'
+                    '<?php\n\nnamespace ###NAMESPACE###;\n\nfinal class Final###CLASS### extends ###CLASS###\n{\n}\n',
+                    'Final' + name,
                 );
                 //FIRST IMPLEMENTATION
                 buildClassLike(
                     path,
                     name,
                     namespace,
-                    '<?php\n\nnamespace ###NAMESPACE###;\n\nclass ###CLASS### extends Abstract###CLASS### implements ###CLASS###Interface\n{\n}\n'
+                    '<?php\n\nnamespace ###NAMESPACE###;\n\nclass ###CLASS### extends Abstract###CLASS### implements ###CLASS###Interface\n{\n}\n',
+                    name,
                 );
                 //IMPLEMENTATION INTERFACE
                 buildClassLike(
                     path,
                     name,
                     namespace,
-                    '<?php\n\nnamespace ###NAMESPACE###;\n\ninterface ###CLASS###Interface extends Abstract###CLASS###Interface\n{\n}\n'
+                    '<?php\n\nnamespace ###NAMESPACE###;\n\ninterface ###CLASS###Interface extends Abstract###CLASS###Interface\n{\n}\n',
+                    name + 'Interface',
                 );
                 //ABSTRACT IMPLEMENTATION
                 buildClassLike(
                     path,
                     name,
                     namespace,
-                    '<?php\n\nnamespace ###NAMESPACE###;\n\nabstract Abstract###CLASS### implements Abstract###CLASS###Interface\n{\n}\n'
+                    '<?php\n\nnamespace ###NAMESPACE###;\n\nabstract Abstract###CLASS### implements Abstract###CLASS###Interface\n{\n}\n',
+                    'Abstract' + name,
                 );
                 //ABSTRACT INTERFACE
                 buildClassLike(
                     path,
                     name,
                     namespace,
-                    '<?php\n\nnamespace ###NAMESPACE###;\n\ninterface Abstract###CLASS###Interface\n{\n}\n'
+                    '<?php\n\nnamespace ###NAMESPACE###;\n\ninterface Abstract###CLASS###Interface\n{\n}\n',
+                    'Abstract' + name + 'Interface',
                 );
             }
         </script>
         <script src="highlight.pack.js"></script>
-        <script>generateStructure(['Example'])</script>
+        <script>generateStructure(['Example', 'Application'])</script>
     </body>
 </html>
