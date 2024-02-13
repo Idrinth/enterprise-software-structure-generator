@@ -7,41 +7,50 @@
         <link rel="stylesheet" href="obsidian.css"/>
     </head>
     <body>
-        <input value="Example,Application" type="text" onkeyup="document.getElementsByTagName('ul')[0].innerHTML='';generateStructure(this.value.split(','))" placeholder="keyword1,keyword2"/>
+        <label for="keywords">Keywords</label>
+        <input id="keywords" value="Example,Application" type="text" onkeyup="newStructure(this.value)" placeholder="keyword1,keyword2"/>
         <ul></ul>
         <script>
+            const starter = [
+                'app',
+                'src',
+                'main',
+                'classes',
+                'code',
+                'lib',
+            ];
+            const buzzwords = [
+                'Object',
+                'Factory',
+                'Builder',
+                'Model',
+                'Entity',
+                'Repository',
+                'Helper',
+                'Adapter',
+                'Dto',
+                'Item',
+                'Manager',
+                'Service',
+                'Provider',
+                'Middleware',
+                'Plugin',
+                'Controller',
+                'Singleton',
+                'Util',
+                'Utils',
+                'Utility',
+                'View',
+            ];
+            function newStructure(keywordString)
+            {
+                document.getElementsByTagName('ul')[0].innerHTML='';
+                const keywords = keywordString.replace(' ', ',').split(',');
+                generateStructure(keywords.filter(keyword => keyword.length > 0));
+            }
             function generateStructure(keywords)
             {
                 'use strict';
-                const starter = [
-                    'app',
-                    'src',
-                    'main',
-                    'classes',
-                    'code',
-                ];
-                const buzzwords = [
-                    'Object',
-                    'Factory',
-                    'Builder',
-                    'Model',
-                    'Entity',
-                    'Repository',
-                    'Helper',
-                    'Adapter',
-                    'Dto',
-                    'Item',
-                    'Manager',
-                    'Service',
-                    'Provider',
-                    'Middleware',
-                    'Plugin',
-                    'Controller',
-                    'Singleton',
-                    'Util',
-                    'Utils',
-                    'Utility',
-                ];
                 let usedNames = [];
                 for (const keyword of keywords) {
                     for (const keyword2 of keywords) {
